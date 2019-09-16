@@ -23,6 +23,11 @@ define( function( require ) {
     currentSoundFades: {
       type: 'boolean',
       defaultValue: true
+    },
+
+    // controls whether the current sound speed is proportional to the current or inversely proportional
+    currentSoundPlaybackMappingReversed: {
+      type: 'flag'
     }
   } );
 

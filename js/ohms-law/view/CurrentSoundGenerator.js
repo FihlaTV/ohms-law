@@ -60,7 +60,13 @@ define( require => {
 
         // Calculate the playback rate based on the normalized current.  The formula came from the design document, and
         // ranges from 0.5 to 2.0 times the default playback rate.
-        const playbackRate = 0.5 + 1.5 * Math.pow( normalizedCurrent, 2 );
+        let playbackRate = 1;
+        if ( OhmsLawQueryParameters.currentSoundPlaybackMappingReversed ) {
+          playbackRate = 0.5 + 1.5 * Math.pow( 1 - normalizedCurrent, 2 );
+        }
+        else {
+          playbackRate = 0.5 + 1.5 * Math.pow( normalizedCurrent, 2 );
+        }
 
         // set the playback rate for all loops
         this.setPlaybackRate( playbackRate );
