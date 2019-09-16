@@ -18,6 +18,7 @@ define( function( require ) {
   var InvertedBooleanProperty = require( 'TAMBO/InvertedBooleanProperty' );
   var ohmsLaw = require( 'OHMS_LAW/ohmsLaw' );
   var OhmsLawConstants = require( 'OHMS_LAW/ohms-law/OhmsLawConstants' );
+  var OhmsLawQueryParameters = require( 'OHMS_LAW/ohms-law/OhmsLawQueryParameters' );
   var OhmsLawScreenSummaryNode = require( 'OHMS_LAW/ohms-law/view/OhmsLawScreenSummaryNode' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ResetAllSoundGenerator = require( 'TAMBO/sound-generators/ResetAllSoundGenerator' );
@@ -62,28 +63,34 @@ define( function( require ) {
 
     // sound generators for voltage and resistance
     var resetNotInProgress = new InvertedBooleanProperty( model.resetInProgressProperty );
-    soundManager.addSoundGenerator( new DiscreteSoundGenerator(
-      model.voltageProperty,
-      OhmsLawConstants.VOLTAGE_RANGE,
-      {
-        sound: sliderClick,
-        numBins: 6,
-        enableControlProperties: [resetNotInProgress],
-        initialOutputLevel: 0.25,
-        alwaysPlayOnChangesProperty: controlPanel.sliderBeingDraggedByKeyboard
-      }
-    ) );
-    soundManager.addSoundGenerator( new DiscreteSoundGenerator(
-      model.resistanceProperty,
-      OhmsLawConstants.RESISTANCE_RANGE,
-      {
-        sound: sliderClick,
-        numBins: 6,
-        enableControlProperties: [resetNotInProgress],
-        initialOutputLevel: 0.2,
-        alwaysPlayOnChangesProperty: controlPanel.sliderBeingDraggedByKeyboard
-      }
-    ) );
+
+    if ( OhmsLawQueryParameters.sliderClicksEnabled ) {
+
+      soundManager.addSoundGenerator( new DiscreteSoundGenerator(
+        model.voltageProperty,
+        OhmsLawConstants.VOLTAGE_RANGE,
+        {
+          sound: sliderClick,
+          numBins: 6,
+          enableControlProperties: [ resetNotInProgress ],
+          initialOutputLevel: 0.25,
+          alwaysPlayOnChangesProperty: controlPanel.sliderBeingDraggedByKeyboard
+        }
+      ) );
+
+      soundManager.addSoundGenerator( new DiscreteSoundGenerator(
+        model.resistanceProperty,
+        OhmsLawConstants.RESISTANCE_RANGE,
+        {
+          sound: sliderClick,
+          numBins: 6,
+          enableControlProperties: [ resetNotInProgress ],
+          initialOutputLevel: 0.2,
+          alwaysPlayOnChangesProperty: controlPanel.sliderBeingDraggedByKeyboard
+        }
+      ) );
+    }
+
 
     // sound generator for current
     this.currentSoundGenerator = new CurrentSoundGenerator( model.currentProperty, {
