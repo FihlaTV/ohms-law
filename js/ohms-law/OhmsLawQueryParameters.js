@@ -13,8 +13,14 @@ define( function( require ) {
 
   var OhmsLawQueryParameters = QueryStringMachine.getAll( {
 
-    // checks all Check Boxes, to make development easier
+    // controls whether the slider click sounds are enabled
     sliderClicksEnabled: {
+      type: 'boolean',
+      defaultValue: true
+    },
+
+    // controls whether the current sound fades out after the user stops changing the value
+    currentSoundFades: {
       type: 'boolean',
       defaultValue: true
     }

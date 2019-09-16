@@ -13,6 +13,7 @@ define( require => {
   // modules
   const ohmsLaw = require( 'OHMS_LAW/ohmsLaw' );
   const OhmsLawConstants = require( 'OHMS_LAW/ohms-law/OhmsLawConstants' );
+  const OhmsLawQueryParameters = require( 'OHMS_LAW/ohms-law/OhmsLawQueryParameters' );
   const SoundClip = require( 'TAMBO/sound-generators/SoundClip' );
 
   // constants
@@ -78,8 +79,10 @@ define( require => {
     step( dt ) {
       if ( this.fadeCountdownTimer > Number.NEGATIVE_INFINITY ) {
 
-        // decrement the fade countdown timer
-        this.fadeCountdownTimer -= dt;
+        // decrement the fade countdown timer (if fadeout is enabled)
+        if ( OhmsLawQueryParameters.currentSoundFades ) {
+          this.fadeCountdownTimer -= dt;
+        }
 
         // if the countdown timer is greater than the pre-fade time, stay at max output level
         if ( this.fadeCountdownTimer > 0 ) {
